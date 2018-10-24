@@ -10,22 +10,22 @@ class Icicle(private val position: Vector2) {
     private val TAG = Icicle::class.java.name
 
     // A render function that takes a ShapeRenderer
-    fun render(renderer: ShapeRenderer) {
+        fun render(renderer: ShapeRenderer) {
 
-        // Set the ShapeType
-        renderer.set(ShapeRenderer.ShapeType.Filled)
+            // Set the ShapeType
+            renderer.set(ShapeRenderer.ShapeType.Filled)
 
-        // Set the ShapeRenderer's color
-        renderer.color = Constants.ICICLE_COLOR
+            // Set the ShapeRenderer's color
+            renderer.color = Constants.ICICLE_COLOR
 
-        // Draw the icicle using the size constants
-        renderer.triangle(
-                position.x,
-                position.y,
-                position.x - ICICLE_WIDTH / 2,
-                position.y + ICICLE_HEIGHT,
-                position.x + ICICLE_WIDTH / 2,
-                position.y + ICICLE_HEIGHT
-        )
+            // Draw the icicle using the size constants
+            renderer.triangle(
+                    position.x,
+                    position.y,
+                    position.x - ICICLE_WIDTH / 2,
+                    position.y + ICICLE_HEIGHT,
+                    position.x + ICICLE_WIDTH / 2,
+                    position.y + ICICLE_HEIGHT
+            )
     }
 }
