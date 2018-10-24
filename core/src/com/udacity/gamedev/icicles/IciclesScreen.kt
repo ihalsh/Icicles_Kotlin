@@ -54,8 +54,10 @@ class IciclesScreen : Screen {
 
     }
 
-
     override fun render(delta: Float) {
+
+        // Call update() on player
+        player.update(delta)
 
         // Apply the iciclesViewport
         iciclesViewport.apply()

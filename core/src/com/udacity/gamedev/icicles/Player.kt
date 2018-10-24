@@ -1,5 +1,7 @@
 package com.udacity.gamedev.icicles
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -7,6 +9,7 @@ import com.udacity.gamedev.icicles.Constants.Companion.HEAD_HEIGHT
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_RADIUS
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_SEGMENTS
 import com.udacity.gamedev.icicles.Constants.Companion.LIMB_WIDTH
+import com.udacity.gamedev.icicles.Constants.Companion.PLAYER_SPEED
 
 class Player(private val viewport: Viewport) {
 
@@ -72,4 +75,21 @@ class Player(private val viewport: Viewport) {
         )
     }
 
+    fun update(delta: Float) {
+
+        // Use Gdx.input.isKeyPressed() to move the player
+        // in the appropriate direction when an arrow key is pressed
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            position.x -= delta * PLAYER_SPEED
+            if (!ensureInBounds(position.x)) position.x = HEAD_RADIUS
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            position.x += delta * PLAYER_SPEED
+            if (!ensureInBounds(position.x)) position.x = viewport.worldWidth - HEAD_RADIUS
+        }
+    }
+
+    private fun ensureInBounds(newPos: Float) =
+            (newPos > HEAD_RADIUS && newPos < viewport.worldWidth - HEAD_RADIUS)
 }

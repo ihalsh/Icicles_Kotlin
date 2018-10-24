@@ -36,6 +36,9 @@ class Constants {
         // Constant for the player's color
         val PLAYER_COLOR = Color.BLACK
 
+        // Constant for player movement speed
+        const val PLAYER_SPEED = 10
+
     }
 }
 
