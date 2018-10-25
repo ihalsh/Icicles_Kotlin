@@ -12,6 +12,7 @@ import com.udacity.gamedev.icicles.Constants.Companion.HEAD_RADIUS
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_SEGMENTS
 import com.udacity.gamedev.icicles.Constants.Companion.LIMB_WIDTH
 import com.udacity.gamedev.icicles.Constants.Companion.PLAYER_SPEED
+import kotlin.math.pow
 
 class Player(private val viewport: Viewport) {
 
@@ -98,6 +99,15 @@ class Player(private val viewport: Viewport) {
         position.x += delta * accelerometerInput * PLAYER_SPEED
 
         ensureInBounds()
+    }
+
+    fun hitByIcicle(icicles: Icicles): Boolean {
+
+        // Loop over icicles, checking if the point of any icicle is within the player's head
+        for (icicle in icicles.icicleList)
+            if (icicle.position.dst(position) < HEAD_RADIUS) return true
+
+        return false
     }
 
     private fun ensureInBounds() {

@@ -19,7 +19,7 @@ class Icicles(private val viewport: Viewport) {
     private val TAG = Icicles::class.java.simpleName
 
     // Use a DelayedRemovalArray to hold our icicles
-    private lateinit var icicleList: DelayedRemovalArray<Icicle>
+    lateinit var icicleList: DelayedRemovalArray<Icicle>
 
     fun init() {
         // Initialize the DelayedRemovalArray

@@ -66,6 +66,9 @@ class IciclesScreen : Screen {
         // Call update() on player
         player.update(delta)
 
+        // Check if the player was hit by an icicle. If so, reset the icicles.
+        if (player.hitByIcicle(icicles)) icicles.init()
+
         // Apply the iciclesViewport
         iciclesViewport.apply()
 
