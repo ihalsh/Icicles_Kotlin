@@ -6,7 +6,7 @@ import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_ACCELERATION
 import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_HEIGHT
 import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_WIDTH
 
-class Icicle(private val position: Vector2) {
+class Icicle(val position: Vector2) {
 
     private val TAG = Icicle::class.java.name
 
