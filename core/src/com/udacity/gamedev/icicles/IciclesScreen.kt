@@ -12,64 +12,25 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.udacity.gamedev.icicles.Constants.Companion.BACKGROUND_COLOR
 import com.udacity.gamedev.icicles.Constants.Companion.HUD_MARGIN
-import com.udacity.gamedev.icicles.Constants.Companion.HUD_FONT_REFERENCE_SCREEN_SIZE
 import com.udacity.gamedev.icicles.Constants.Companion.WORLD_SIZE
 import kotlin.math.max
-import kotlin.math.min
 
-class IciclesScreen (var topScore:Int = 0) : Screen {
+class IciclesScreen(var topScore: Int = 0,
+                    private val difficulty: Constants.DIFFICULTY = Constants.DIFFICULTY.COLD,
+                    private val renderer: ShapeRenderer = ShapeRenderer(),
+                    private val iciclesViewport: ExtendViewport = ExtendViewport(WORLD_SIZE, WORLD_SIZE),
+                    private val player: Player = Player(iciclesViewport),
+                    private val icicles: Icicles = Icicles(iciclesViewport, difficulty = difficulty),
+                    private val hudViewport: ScreenViewport = ScreenViewport(),
+                    private val batch: SpriteBatch = SpriteBatch(),
+                    private val font: BitmapFont = BitmapFont()) : Screen {
 
     private val TAG = IciclesScreen::class.java.name
 
-    // A ShapeRenderer
-    private lateinit var renderer: ShapeRenderer
-
-    // An ExtendViewport
-    private lateinit var iciclesViewport: ExtendViewport
-
-    // An Icicle
-    private lateinit var icicle: Icicle
-
-    // Player
-    private lateinit var player: Player
-
-    // An instance of Icicles
-    private lateinit var icicles: Icicles
-
-    // Add ScreenViewport for HUD
-    private lateinit var hudViewport: ScreenViewport
-
-    // SpriteBatch
-    private lateinit var batch: SpriteBatch
-
-    //BitmapFont
-    private lateinit var font: BitmapFont
-
     override fun show() {
-
-        // Initialize the ShapeRenderer
-        renderer = ShapeRenderer()
 
         // Set autoShapeType(true) on the ShapeRenderer
         renderer.setAutoShapeType(true)
-
-        // Initialize the iciclesViewport using the world size constant
-        iciclesViewport = ExtendViewport(WORLD_SIZE, WORLD_SIZE)
-
-        // Initialize the player
-        player = Player(iciclesViewport)
-
-        // Initialize icicles
-        icicles = Icicles(iciclesViewport)
-
-        // Initialize the HUD viewport
-        hudViewport = ScreenViewport()
-
-        // Initialize the SpriteBatch
-        batch = SpriteBatch()
-
-        // Initialize the BitmapFont
-        font = BitmapFont()
 
         // Give the font a linear TextureFilter
         font.region.texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear)
@@ -86,8 +47,6 @@ class IciclesScreen (var topScore:Int = 0) : Screen {
 
         // Set font scale to min(width, height) / reference screen size
         font.data.setScale(Math.min(width, height) / Constants.HUD_FONT_REFERENCE_SCREEN_SIZE)
-
-
     }
 
     override fun dispose() {
@@ -148,7 +107,7 @@ class IciclesScreen (var topScore:Int = 0) : Screen {
         // Draw the number of player deaths in the top left
         font.draw(
                 batch,
-                "Death = ${player.deathCount}",
+                "Death = ${player.deathCount}\nDifficulty: ${difficulty.level}",
                 HUD_MARGIN,
                 hudViewport.worldHeight - HUD_MARGIN
         )
@@ -176,12 +135,8 @@ class IciclesScreen (var topScore:Int = 0) : Screen {
 
     }
 
-
     override fun hide() {
         // Dispose of the ShapeRenderer
         renderer.dispose()
-
     }
-
-
 }

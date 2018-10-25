@@ -13,19 +13,14 @@ import com.udacity.gamedev.icicles.Constants.Companion.HEAD_SEGMENTS
 import com.udacity.gamedev.icicles.Constants.Companion.LIMB_WIDTH
 import com.udacity.gamedev.icicles.Constants.Companion.PLAYER_SPEED
 
-class Player(private val viewport: Viewport, var deathCount: Int = 0) {
+class Player(private val viewport: Viewport,
+             var deathCount: Int = 0,
+             private var position: Vector2 = Vector2(viewport.worldWidth / 2, HEAD_HEIGHT)) {
 
-    init {
-        init()
-    }
+    val TAG = Player::class.java.simpleName
 
-    val TAG = Player::class.java.name
-
-    // Position
-    private lateinit var position: Vector2
-
-    // Function that moves the character to the bottom center of the screen
     fun init() {
+        // moves the character to the bottom center of the screen
         position = Vector2(viewport.worldWidth / 2, HEAD_HEIGHT)
     }
 
@@ -104,7 +99,7 @@ class Player(private val viewport: Viewport, var deathCount: Int = 0) {
 
         // Loop over icicles, checking if the point of any icicle is within the player's head
         for (icicle in icicles.icicleList)
-            if (icicle.position.dst(position) < HEAD_RADIUS){
+            if (icicle.position.dst(position) < HEAD_RADIUS) {
                 // If the player was hit, increment death counter
                 deathCount++
                 return true

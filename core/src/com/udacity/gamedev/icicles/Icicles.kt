@@ -1,6 +1,5 @@
 package com.udacity.gamedev.icicles
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -8,9 +7,12 @@ import com.badlogic.gdx.utils.DelayedRemovalArray
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_COLOR
 import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_HEIGHT
-import com.udacity.gamedev.icicles.Constants.Companion.SPAWNS_PER_SECOND
 
-class Icicles(private val viewport: Viewport, var dodgedIcicles: Int = 0) {
+class Icicles(private val viewport: Viewport,
+              var dodgedIcicles: Int = 0,
+              private val difficulty: Constants.DIFFICULTY,
+              var icicleList: DelayedRemovalArray<Icicle> =
+                      DelayedRemovalArray(false, 10)) {
 
     init {
         init()
@@ -18,12 +20,9 @@ class Icicles(private val viewport: Viewport, var dodgedIcicles: Int = 0) {
 
     private val TAG = Icicles::class.java.simpleName
 
-    // Use a DelayedRemovalArray to hold our icicles
-    lateinit var icicleList: DelayedRemovalArray<Icicle>
-
     fun init() {
         // Initialize the DelayedRemovalArray
-        icicleList = DelayedRemovalArray(false, 10)
+        icicleList.clear()
         // Set icicles dodged count to zero
         dodgedIcicles = 0
     }
@@ -32,7 +31,7 @@ class Icicles(private val viewport: Viewport, var dodgedIcicles: Int = 0) {
 
         // Replace hard-coded spawn rate with a constant
         // Add a new icicle at the top of the viewport at a random x position
-        if (MathUtils.random() < delta * SPAWNS_PER_SECOND)
+        if (MathUtils.random() < delta * difficulty.rate)
             icicleList.add(Icicle(Vector2(
                     MathUtils.random() * viewport.worldWidth,
                     viewport.worldHeight
@@ -49,7 +48,7 @@ class Icicles(private val viewport: Viewport, var dodgedIcicles: Int = 0) {
                 update(delta)
 
                 // Remove any icicle completely off the bottom of the screen
-                if (position.y < -ICICLE_HEIGHT){
+                if (position.y < -ICICLE_HEIGHT) {
                     icicleList.removeValue(this, true)
                     // Increment count of icicles dodged
                     dodgedIcicles++

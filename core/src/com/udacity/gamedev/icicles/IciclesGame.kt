@@ -6,6 +6,6 @@ class IciclesGame : Game() {
 
     override fun create() {
         //Call setScreen() with a new IciclesScreen()
-        setScreen(IciclesScreen())
+        setScreen(IciclesScreen(difficulty = Constants.DIFFICULTY.COLDER))
     }
 }

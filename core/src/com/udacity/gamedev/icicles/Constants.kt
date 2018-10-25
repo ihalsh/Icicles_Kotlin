@@ -28,9 +28,6 @@ class Constants {
         // Constant for icicle acceleration
         val ICICLE_ACCELERATION = Vector2(0f, -5.0f)
 
-        // Constant for icicle spawns per second
-        const val SPAWNS_PER_SECOND = 5f
-
         // Constant for player head radius
         const val HEAD_RADIUS = 0.5f
 
@@ -57,6 +54,23 @@ class Constants {
 
         // Constant for the margin between the HUD and screen edge
         const val HUD_MARGIN = 20f
+
+        // Constants for difficulty labels ("Cold", "Colder", "Coldest")
+        const val COLD = "Cold"
+        const val COLDER = "Colder"
+        const val COLDEST = "Coldest"
+
+        // Constants for the icicle spawn rates for the various difficulties
+        const val COLD_SPAWN_RATE = 5f
+        const val COLDER_SPAWN_RATE = 10f
+        const val COLDEST_SPAWN_RATE = 15f
+    }
+
+    // Difficulty enum holding the spawn rate and label for each difficulty
+    enum class DIFFICULTY(val level: String, val rate: Float) {
+        COLD(level = Constants.COLD, rate = COLD_SPAWN_RATE),
+        COLDER(level = Constants.COLDER, rate = COLDER_SPAWN_RATE),
+        COLDEST(level = Constants.COLDEST, rate = COLDEST_SPAWN_RATE)
     }
 }
 
