@@ -10,7 +10,7 @@ import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_COLOR
 import com.udacity.gamedev.icicles.Constants.Companion.ICICLE_HEIGHT
 import com.udacity.gamedev.icicles.Constants.Companion.SPAWNS_PER_SECOND
 
-class Icicles(private val viewport: Viewport) {
+class Icicles(private val viewport: Viewport, var dodgedIcicles: Int = 0) {
 
     init {
         init()
@@ -24,6 +24,8 @@ class Icicles(private val viewport: Viewport) {
     fun init() {
         // Initialize the DelayedRemovalArray
         icicleList = DelayedRemovalArray(false, 10)
+        // Set icicles dodged count to zero
+        dodgedIcicles = 0
     }
 
     fun update(delta: Float) {
@@ -47,8 +49,11 @@ class Icicles(private val viewport: Viewport) {
                 update(delta)
 
                 // Remove any icicle completely off the bottom of the screen
-                if (position.y < -ICICLE_HEIGHT)
+                if (position.y < -ICICLE_HEIGHT){
                     icicleList.removeValue(this, true)
+                    // Increment count of icicles dodged
+                    dodgedIcicles++
+                }
             }
         }
         // End removal session

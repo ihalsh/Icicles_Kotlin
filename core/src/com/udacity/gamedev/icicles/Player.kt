@@ -12,9 +12,8 @@ import com.udacity.gamedev.icicles.Constants.Companion.HEAD_RADIUS
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_SEGMENTS
 import com.udacity.gamedev.icicles.Constants.Companion.LIMB_WIDTH
 import com.udacity.gamedev.icicles.Constants.Companion.PLAYER_SPEED
-import kotlin.math.pow
 
-class Player(private val viewport: Viewport) {
+class Player(private val viewport: Viewport, var deathCount: Int = 0) {
 
     init {
         init()
@@ -105,7 +104,11 @@ class Player(private val viewport: Viewport) {
 
         // Loop over icicles, checking if the point of any icicle is within the player's head
         for (icicle in icicles.icicleList)
-            if (icicle.position.dst(position) < HEAD_RADIUS) return true
+            if (icicle.position.dst(position) < HEAD_RADIUS){
+                // If the player was hit, increment death counter
+                deathCount++
+                return true
+            }
 
         return false
     }
