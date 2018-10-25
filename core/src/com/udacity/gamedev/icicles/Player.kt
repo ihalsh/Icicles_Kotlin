@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.udacity.gamedev.icicles.Constants.Companion.ACCELEROMETER_SENSITIVITY
+import com.udacity.gamedev.icicles.Constants.Companion.GRAVITATIONAL_ACCELERATION
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_HEIGHT
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_RADIUS
 import com.udacity.gamedev.icicles.Constants.Companion.HEAD_SEGMENTS
@@ -81,15 +83,26 @@ class Player(private val viewport: Viewport) {
         // in the appropriate direction when an arrow key is pressed
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             position.x -= delta * PLAYER_SPEED
-            if (!ensureInBounds(position.x)) position.x = HEAD_RADIUS
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             position.x += delta * PLAYER_SPEED
-            if (!ensureInBounds(position.x)) position.x = viewport.worldWidth - HEAD_RADIUS
         }
+
+        // Accelerometer Movement
+
+        // Compute accelerometer input = raw input / (gravity * sensitivity)
+        val accelerometerInput = Gdx.input.accelerometerY /
+                (GRAVITATIONAL_ACCELERATION * ACCELEROMETER_SENSITIVITY)
+
+        position.x += delta * accelerometerInput * PLAYER_SPEED
+
+        ensureInBounds()
     }
 
-    private fun ensureInBounds(newPos: Float) =
-            (newPos > HEAD_RADIUS && newPos < viewport.worldWidth - HEAD_RADIUS)
+    private fun ensureInBounds() {
+        if (position.x < HEAD_RADIUS) position.x = HEAD_RADIUS
+        if (position.x > (viewport.worldWidth - HEAD_RADIUS))
+            position.x = viewport.worldWidth - HEAD_RADIUS
+    }
 }

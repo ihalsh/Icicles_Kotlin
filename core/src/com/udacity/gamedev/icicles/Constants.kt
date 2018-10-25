@@ -1,6 +1,7 @@
 package com.udacity.gamedev.icicles
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Vector2
 
 class Constants {
 
@@ -21,6 +22,12 @@ class Constants {
         // Constant for the color of the icicles
         val ICICLE_COLOR = Color.WHITE
 
+        // Constant for icicle acceleration
+        val ICICLE_ACCELERATION = Vector2(0f, -5.0f)
+
+        // Constant for icicle spawns per second
+        val SPAWNS_PER_SECOND = 5f
+
         // Constant for player head radius
         const val HEAD_RADIUS = 0.5f
 
@@ -38,6 +45,12 @@ class Constants {
 
         // Constant for player movement speed
         const val PLAYER_SPEED = 10
+
+        // Constant for Accelerometer sensitivity
+        val ACCELEROMETER_SENSITIVITY = 0.5f
+
+        // Constant for acceleration due to gravity (9.8)
+        val GRAVITATIONAL_ACCELERATION = 9.8f
 
     }
 }

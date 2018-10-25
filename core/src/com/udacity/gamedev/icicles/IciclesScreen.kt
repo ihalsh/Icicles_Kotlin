@@ -26,6 +26,9 @@ class IciclesScreen : Screen {
     // Player
     private lateinit var player: Player
 
+    // An instance of Icicles
+    private lateinit var icicles: Icicles
+
     override fun show() {
 
         // Initialize the ShapeRenderer
@@ -37,17 +40,18 @@ class IciclesScreen : Screen {
         // Initialize the iciclesViewport using the world size constant
         iciclesViewport = ExtendViewport(WORLD_SIZE, WORLD_SIZE)
 
-        // Create a new Icicle in the middle of the world
-        icicle = Icicle(Vector2( WORLD_SIZE/2, WORLD_SIZE/2))
-
         // Initialize the player
         player = Player(iciclesViewport)
+
+        // Initialize icicles
+        icicles = Icicles(iciclesViewport)
     }
 
     override fun resize(width: Int, height: Int) {
         // Ensure that the iciclesViewport updates correctly
         iciclesViewport.update(width, height, true)
         player.init()
+        icicles.init()
     }
 
     override fun dispose() {
@@ -55,6 +59,9 @@ class IciclesScreen : Screen {
     }
 
     override fun render(delta: Float) {
+
+        // Call update() on icicles
+        icicles.update(delta)
 
         // Call update() on player
         player.update(delta)
@@ -76,7 +83,9 @@ class IciclesScreen : Screen {
 
         // Draw the Icicle
         renderer.begin()
-        icicle.render(renderer)
+
+        // Call render() on the icicles
+        icicles.render(renderer)
 
         // Call render() on the player
         player.render(renderer)
