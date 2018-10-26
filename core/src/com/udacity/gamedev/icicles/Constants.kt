@@ -44,7 +44,7 @@ class Constants {
         const val PLAYER_SPEED = 10
 
         // Constant for Accelerometer sensitivity
-        const val ACCELEROMETER_SENSITIVITY = 0.5f
+        const val ACCELEROMETER_SENSITIVITY = 0.125f
 
         // Constant for acceleration due to gravity (9.8)
         const val GRAVITATIONAL_ACCELERATION = 9.8f
@@ -64,6 +64,28 @@ class Constants {
         const val COLD_SPAWN_RATE = 5f
         const val COLDER_SPAWN_RATE = 10f
         const val COLDEST_SPAWN_RATE = 15f
+
+        // Constants for the color of each difficulty select circle
+        val COLD_LEVEL_COLOR = Color(0.2f, 0.2f, 1f, 1f)
+        val COLDER_LEVEL_COLOR = Color(0.5f, 0.5f, 1f, 1f)
+        val COLDEST_LEVEL_COLOR = Color(0.7f, 0.7f, 1f, 1f)
+
+        // Constant for the size of the difficulty world
+        const val DIFFICULTY_WORLD_SIZE = 480f
+
+        // Constant for the radius of the difficulty select "buttons"
+        const val BUTTON_RADIUS = 60f
+
+        // Constant for the scale of the difficulty labels (1.5 works well)
+        const val DIFFICULTY_LABELS_SCALE = 1.5f
+
+        // Vector2 constants for the centers of the difficulty select buttons
+        val COLD_LEVEL_CENTER = Vector2(DIFFICULTY_WORLD_SIZE / 2 - 150,
+                DIFFICULTY_WORLD_SIZE / 2)
+        val COLDER_LEVEL_CENTER = Vector2(DIFFICULTY_WORLD_SIZE / 2,
+                DIFFICULTY_WORLD_SIZE / 2)
+        val COLDEST_LEVEL_CENTER = Vector2(DIFFICULTY_WORLD_SIZE / 2 + 150,
+                DIFFICULTY_WORLD_SIZE / 2)
     }
 
     // Difficulty enum holding the spawn rate and label for each difficulty

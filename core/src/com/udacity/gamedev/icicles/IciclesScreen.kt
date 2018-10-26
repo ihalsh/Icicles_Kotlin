@@ -1,6 +1,7 @@
 package com.udacity.gamedev.icicles
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
@@ -16,6 +17,7 @@ import com.udacity.gamedev.icicles.Constants.Companion.WORLD_SIZE
 import kotlin.math.max
 
 class IciclesScreen(var topScore: Int = 0,
+                    private val game: IciclesGame,
                     private val difficulty: Constants.DIFFICULTY = Constants.DIFFICULTY.COLD,
                     private val renderer: ShapeRenderer = ShapeRenderer(),
                     private val iciclesViewport: ExtendViewport = ExtendViewport(WORLD_SIZE, WORLD_SIZE),
@@ -23,11 +25,12 @@ class IciclesScreen(var topScore: Int = 0,
                     private val icicles: Icicles = Icicles(iciclesViewport, difficulty = difficulty),
                     private val hudViewport: ScreenViewport = ScreenViewport(),
                     private val batch: SpriteBatch = SpriteBatch(),
-                    private val font: BitmapFont = BitmapFont()) : Screen {
+                    private val font: BitmapFont = BitmapFont()) : Screen, InputAdapter() {
 
     private val TAG = IciclesScreen::class.java.name
 
     override fun show() {
+        Gdx.input.inputProcessor = this
 
         // Set autoShapeType(true) on the ShapeRenderer
         renderer.setAutoShapeType(true)
@@ -138,5 +141,14 @@ class IciclesScreen(var topScore: Int = 0,
     override fun hide() {
         // Dispose of the ShapeRenderer
         renderer.dispose()
+        font.dispose()
+        batch.dispose()
+    }
+
+    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        // Tell IciclesGame to show the difficulty screen
+        // Dispose of the ShapeRenderer
+        game.showDifficultyScreen()
+        return true
     }
 }
